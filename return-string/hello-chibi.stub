@@ -1,0 +1,8 @@
+(c-system-include "string.h")
+
+(c-declare "
+static const char *get_greeting(void) {
+    return \"Hello, world!\";
+}")
+
+(define-c (const string) (get-greeting "get_greeting") ())

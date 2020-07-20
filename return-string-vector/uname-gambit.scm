@@ -26,9 +26,6 @@
 c-end
 ))
 
-(let* ((v (uname)) (n (vector-length v)))
-  (let loop ((i 0))
-    (when (< i n)
-      (display (vector-ref v i))
-      (newline)
-      (loop (+ i 1)))))
+(define (displayln x) (display x) (newline))
+
+(vector-for-each displayln (uname))

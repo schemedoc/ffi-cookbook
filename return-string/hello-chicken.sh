@@ -1,9 +1,7 @@
 #!/bin/sh
-
-set -e -u -x
-
-cd "$(dirname ${0})"
-echo "Entering directory '${PWD}'"
-
+set -eu
+cd "$(dirname "$0")"
+echo "Entering directory '$PWD'"
+set -x
 csc hello-chicken.scm
 ./hello-chicken

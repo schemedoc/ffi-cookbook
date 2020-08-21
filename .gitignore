@@ -3,4 +3,3 @@
 *.dylib
 *.o*
 *.so
-*-chicken

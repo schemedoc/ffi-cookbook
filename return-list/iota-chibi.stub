@@ -1,0 +1,15 @@
+(c-declare "
+static sexp sexp_iota(sexp ctx, int n) {
+  sexp_gc_var1(list);
+
+  list = SEXP_NULL;
+  sexp_gc_preserve1(ctx, list);
+  while (n > 0) {
+    n--;
+    list = sexp_cons(ctx, sexp_make_fixnum(n), list);
+  }
+  sexp_gc_release1(ctx);
+  return list;
+}")
+
+(define-c sexp (iota "sexp_iota") ((value ctx sexp) int))

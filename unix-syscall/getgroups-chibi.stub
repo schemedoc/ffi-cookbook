@@ -1,7 +1,6 @@
 (c-system-include "unistd.h")
 
 (c-declare "
-
 static sexp sexp_getgroups(sexp ctx) {
   gid_t *gids;
   gid_t *new_gids;

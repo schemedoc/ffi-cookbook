@@ -10,7 +10,10 @@
         ___S32 *gids = ___CAST(___S32 *, ___BODY(vector));
         int len = getgroups(cap, gids);
         ___EXT(___release_scmobj)(vector);
-        if (len >= 0) ___return(vector);
+        if (len >= 0) {
+            ___S32VECTORSHRINK(vector, ___FIX(len));
+            ___return(vector);
+        }
     }
     ___return(___FAL);
 c-end

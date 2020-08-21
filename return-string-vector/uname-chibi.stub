@@ -1,0 +1,26 @@
+(c-system-include "sys/utsname.h")
+
+(c-declare "
+static sexp sexp_uname(sexp ctx) {
+  struct utsname buf;
+  sexp_gc_var1(vec);
+
+  vec = sexp_make_vector(ctx, sexp_make_fixnum(5), SEXP_FALSE);
+  sexp_gc_preserve1(ctx, vec);
+  if (uname(&buf) == 0) {
+    sexp_vector_set(vec, sexp_make_fixnum(0),
+                    sexp_c_string(ctx, buf.sysname,  -1));
+    sexp_vector_set(vec, sexp_make_fixnum(1),
+                    sexp_c_string(ctx, buf.nodename, -1));
+    sexp_vector_set(vec, sexp_make_fixnum(2),
+                    sexp_c_string(ctx, buf.release,  -1));
+    sexp_vector_set(vec, sexp_make_fixnum(3),
+                    sexp_c_string(ctx, buf.version,  -1));
+    sexp_vector_set(vec, sexp_make_fixnum(4),
+                    sexp_c_string(ctx, buf.machine,  -1));
+  }
+  sexp_gc_release1(ctx);
+  return vec;
+}")
+
+(define-c sexp (uname "sexp_uname") ((value ctx sexp)))

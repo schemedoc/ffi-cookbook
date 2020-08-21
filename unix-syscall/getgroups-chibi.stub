@@ -1,0 +1,37 @@
+(c-system-include "unistd.h")
+
+(c-declare "
+
+static sexp sexp_getgroups(sexp ctx) {
+  gid_t *gids;
+  gid_t *new_gids;
+  int cap, len, i;
+  sexp_gc_var1(vec);
+
+  gids = NULL;
+  cap = 8;
+  for (;;) {
+    if (cap == 256) {
+      free(gids);
+      return SEXP_FALSE;
+    }
+    new_gids = realloc(gids, cap * sizeof(*gids));
+    if (new_gids == NULL) {
+      free(gids);
+      return SEXP_FALSE;
+    }
+    gids = new_gids;
+    len = getgroups(cap, gids);
+    if (len >= 0) break;
+    cap *= 2;
+  }
+  vec = sexp_make_vector(ctx, sexp_make_fixnum(len), SEXP_FALSE);
+  sexp_gc_preserve1(ctx, vec);
+  for (i = 0; i < len; i++) {
+    sexp_vector_set(vec, sexp_make_fixnum(i), sexp_make_fixnum(gids[i]));
+  }
+  sexp_gc_release1(ctx);
+  return vec;
+}")
+
+(define-c sexp (getgroups "sexp_getgroups") ((value ctx sexp)))

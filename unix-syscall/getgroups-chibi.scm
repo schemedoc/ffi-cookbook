@@ -1,5 +1,7 @@
 (import (scheme base) (scheme write) (getgroups-chibi))
 
-(define (displayln x) (display x) (newline))
+(define (writeln x) (write x) (newline))
 
-(vector-for-each displayln (getgroups))
+(let ((gs (getgroups)))
+  (writeln gs)
+  (writeln (vector-length gs)))

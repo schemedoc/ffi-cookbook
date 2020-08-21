@@ -1,7 +1,7 @@
 *-chibi.c
 *-chicken
+*.dll
 *.dylib
+*.exe
 *.o*
 *.so
-*.dll
-*.exe

@@ -14,7 +14,7 @@ while (n > 0) {
     new_list = ___EXT(___make_pair) (___PSTATE, ___FIX(n), list);
     ___EXT(___release_scmobj) (list);
     list = new_list;
-    if (___FIXNUMP(list)) return ___FAL; /* allocation failed */
+    if (___FIXNUMP(list)) ___return(___FAL); /* allocation failed */
 }
 ___return(list);
 "))

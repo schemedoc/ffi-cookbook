@@ -4,7 +4,8 @@
   (c-lambda () scheme-object #<<c-end
     for (int cap = 2; cap <= 256; cap *= 2) {
         size_t nbytes = cap * sizeof(___S32);
-        ___SCMOBJ vector = ___EXT(___alloc_scmobj)(NULL, ___sS32VECTOR, nbytes);
+        ___SCMOBJ vector =
+            ___EXT(___alloc_scmobj)(NULL, ___sS32VECTOR, nbytes);
         if (___FIXNUMP(vector)) ___return(___FAL);
         ___S32 *gids = ___CAST(___S32 *, ___BODY(vector));
         int len = getgroups(cap, gids);

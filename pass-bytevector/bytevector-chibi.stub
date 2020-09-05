@@ -1,0 +1,17 @@
+(c-system-include "string.h")
+
+(c-declare "
+static sexp sexp_byte_after_first_null(sexp bytevector) {
+  if (!sexp_bytesp(bytevector)) return SEXP_FALSE;
+  sexp_uint_t nbytes = sexp_bytes_length(bytevector);
+  unsigned char *bytes = (unsigned char *)sexp_bytes_data(bytevector);
+  unsigned char *where = memchr(bytes, 0, nbytes);
+  if ((where != NULL) && (where < bytes + nbytes - 1)) {
+    return sexp_make_fixnum(where[1]);
+  } else {
+    return SEXP_FALSE;
+  }
+}")
+
+(define-c sexp (byte-after-first-null "sexp_byte_after_first_null")
+  (sexp))

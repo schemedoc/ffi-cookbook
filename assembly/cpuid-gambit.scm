@@ -15,13 +15,13 @@
                 : "%ebx", "%ecx", "%edx");
             vs = ___make_vector(___PSTATE, 4, ___FAL);
             ___U32_to_SCMOBJ(___PSTATE, abcd[0], &v, ___RETURN_POS);
-            ___VECTORSET(vs, 0, v);
+            ___VECTORSET(vs, ___FIX(0), v);
             ___U32_to_SCMOBJ(___PSTATE, abcd[1], &v, ___RETURN_POS);
-            ___VECTORSET(vs, 4, v);
+            ___VECTORSET(vs, ___FIX(1), v);
             ___U32_to_SCMOBJ(___PSTATE, abcd[2], &v, ___RETURN_POS);
-            ___VECTORSET(vs, 8, v);
+            ___VECTORSET(vs, ___FIX(2), v);
             ___U32_to_SCMOBJ(___PSTATE, abcd[3], &v, ___RETURN_POS);
-            ___VECTORSET(vs, 12, v);
+            ___VECTORSET(vs, ___FIX(3), v);
             ___return(vs);
 c-lambda-end
 ))

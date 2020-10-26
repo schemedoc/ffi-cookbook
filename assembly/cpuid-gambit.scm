@@ -3,8 +3,6 @@
 (define %cpuid
   (c-lambda (int) scheme-object #<<c-lambda-end
             unsigned int abcd[4];
-            ___SCMOBJ vs, v;
-
             asm("cpuid;"
                 "mov %%eax, (%0);"
                 "mov %%ebx, 4(%0);"
@@ -13,15 +11,12 @@
                 :
                 : "D"(abcd), "a"(___arg1)
                 : "%ebx", "%ecx", "%edx");
-            vs = ___make_vector(___PSTATE, 4, ___FAL);
-            ___U32_to_SCMOBJ(___PSTATE, abcd[0], &v, ___RETURN_POS);
-            ___VECTORSET(vs, ___FIX(0), v);
-            ___U32_to_SCMOBJ(___PSTATE, abcd[1], &v, ___RETURN_POS);
-            ___VECTORSET(vs, ___FIX(1), v);
-            ___U32_to_SCMOBJ(___PSTATE, abcd[2], &v, ___RETURN_POS);
-            ___VECTORSET(vs, ___FIX(2), v);
-            ___U32_to_SCMOBJ(___PSTATE, abcd[3], &v, ___RETURN_POS);
-            ___VECTORSET(vs, ___FIX(3), v);
+            ___SCMOBJ vs = ___make_vector(___PSTATE, 4, ___FAL);
+            for (size_t i = 0; i < 4; i++) {
+              ___SCMOBJ v;
+              ___U32_to_SCMOBJ(___PSTATE, abcd[i], &v, ___RETURN_POS);
+              ___VECTORSET(vs, ___FIX(i), v);
+            }
             ___return(vs);
 c-lambda-end
 ))
